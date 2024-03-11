@@ -61,7 +61,7 @@ RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
 
-COPY --chown=django:django ./utility/Docker/django/start /start
+COPY --chown=django:django ./utility/Docker/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
