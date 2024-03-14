@@ -82,6 +82,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "roomsharing.users",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -98,6 +99,8 @@ MIGRATION_MODULES = {"sites": "roomsharing.contrib.sites.migrations"}
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+AUTH_USER_MODEL = "users.User"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
