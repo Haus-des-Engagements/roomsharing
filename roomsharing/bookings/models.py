@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.postgres.constraints import ExclusionConstraint
 from django.contrib.postgres.fields import DateTimeRangeField
 from django.contrib.postgres.fields import RangeOperators
@@ -33,3 +35,25 @@ class Bookings(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+def find_available_rooms(start_times, duration):
+    available_rooms_by_slot = {}
+    slot_duration = timedelta(hours=duration)
+
+    for start_time in start_times:
+        end_time = start_time + slot_duration
+
+        # Query bookings that overlap with the time slot
+        overlapping_bookings = Bookings.objects.filter(
+            timespan__overlap=(start_time, end_time),
+        )
+
+        # Get the list of booked room IDs
+        booked_room_ids = overlapping_bookings.values_list("room_id", flat=True)
+
+        # Query rooms that are not booked during the time slot
+        available_rooms = Rooms.objects.exclude(id__in=booked_room_ids)
+        available_rooms_by_slot[start_time] = available_rooms
+
+    return available_rooms_by_slot
