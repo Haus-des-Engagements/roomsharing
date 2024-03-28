@@ -44,8 +44,8 @@ class User(AbstractUser):
     organizations = ManyToManyField(
         Organization,
         verbose_name=_("Organizations"),
-        related_name="user_of_organizations",
-        related_query_name="users_of_organizations",
+        related_name="users_of_organization",
+        related_query_name="user_of_organization",
         blank=True,
     )
 
